@@ -24,5 +24,10 @@ defmodule Muhurta.Events.EventInstance do
       source_attribute :event_id
       destination_attribute :event_id
     end
+
+    has_many :participants, Muhurta.Events.Participant do
+      source_attribute :event_instance_id
+      destination_attribute :event_instance_id
+    end
   end
 end
