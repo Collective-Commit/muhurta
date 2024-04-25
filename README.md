@@ -4,6 +4,10 @@ Muhurta is an open source collaboration tool for organising events and meetings 
 
 Built with [Elixir](https://github.com/elixir-lang/elixir), [Phoenix](https://github.com/phoenixframework/phoenix), [TailwindCSS](https://github.com/tailwindlabs/tailwindcss) & several other open source libraries.
 
+## What is in the name?
+"Muhurta" refers to a traditional unit of time in ancient Indian systems of timekeeping. One Muhurta is approximately equal to 48 minutes. This unit is part of a larger system where the day is divided into 30 Muhurtas, covering both day and night. Muhurta is also a concept in Vedic astrology that identifies favorable times to start significant activities or events. 
+
+The practice of choosing a Muhurta is deeply rooted in Indian culture and continues to be an integral part of planning important life events. 
 
 ## Get started
 
