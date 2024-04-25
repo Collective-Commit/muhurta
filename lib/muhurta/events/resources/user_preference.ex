@@ -10,9 +10,16 @@ defmodule Muhurta.Events.UserPreference do
 
   attributes do
     uuid_primary_key :user_preference_id
-    attribute :timezon, :string
+    attribute :timezone, :string
 
     create_timestamp :created_at
     update_timestamp :updated_at
+  end
+
+  relationships do
+    belongs_to :user, Muhurta.Events.User do
+      source_attribute :user_id
+      destination_attribute :user_id
+    end
   end
 end

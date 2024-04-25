@@ -22,6 +22,11 @@ defmodule Muhurta.Events.Participant do
   end
 
   relationships do
+    belongs_to :user, Muhurta.Events.User do
+      source_attribute :user_id
+      destination_attribute :user_id
+    end
+
     belongs_to :event_instance, Muhurta.Events.EventInstance do
       source_attribute :event_instance_id
       destination_attribute :event_instance_id

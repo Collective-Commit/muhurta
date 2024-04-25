@@ -9,5 +9,6 @@ defmodule Muhurta.Events do
     resource Muhurta.Events.UserPreference
     resource Muhurta.Events.Organizer
     resource Muhurta.Events.Participant
+    resource Muhurta.Events.User
   end
 end
