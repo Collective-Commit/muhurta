@@ -12,8 +12,8 @@ defmodule Muhurta.AccountsTest do
     end
 
     test "returns the user if the email exists" do
-      %{id: id} = user = user_fixture()
-      assert %User{id: ^id} = Accounts.get_user_by_email(user.email)
+      %{user_id: id} = user = user_fixture()
+      assert %User{user_id: ^id} = Accounts.get_user_by_email(user.email)
     end
   end
 
@@ -28,9 +28,9 @@ defmodule Muhurta.AccountsTest do
     end
 
     test "returns the user if the email and password are valid" do
-      %{id: id} = user = user_fixture()
+      %{user_id: id} = user = user_fixture()
 
-      assert %User{id: ^id} =
+      assert %User{user_id: ^id} =
                Accounts.get_user_by_email_and_password(user.email, valid_user_password())
     end
   end
@@ -43,8 +43,8 @@ defmodule Muhurta.AccountsTest do
     end
 
     test "returns the user with the given id" do
-      %{id: id} = user = user_fixture()
-      assert %User{id: ^id} = Accounts.get_user!(user.id)
+      %{user_id: id} = user = user_fixture()
+      assert %User{user_id: ^id} = Accounts.get_user!(user.user_id)
     end
   end
 
@@ -170,7 +170,7 @@ defmodule Muhurta.AccountsTest do
       email = unique_user_email()
       {:ok, user} = Accounts.apply_user_email(user, valid_user_password(), %{email: email})
       assert user.email == email
-      assert Accounts.get_user!(user.id).email != email
+      assert Accounts.get_user!(user.user_id).email != email
     end
   end
 
@@ -187,7 +187,7 @@ defmodule Muhurta.AccountsTest do
 
       {:ok, token} = Base.url_decode64(token, padding: false)
       assert user_token = Repo.get_by(UserToken, token: :crypto.hash(:sha256, token))
-      assert user_token.user_id == user.id
+      assert user_token.user_id == user.user_id
       assert user_token.sent_to == user.email
       assert user_token.context == "change:current@example.com"
     end
@@ -208,31 +208,31 @@ defmodule Muhurta.AccountsTest do
 
     test "updates the email with a valid token", %{user: user, token: token, email: email} do
       assert Accounts.update_user_email(user, token) == :ok
-      changed_user = Repo.get!(User, user.id)
+      changed_user = Repo.get!(User, user.user_id)
       assert changed_user.email != user.email
       assert changed_user.email == email
       assert changed_user.confirmed_at
       assert changed_user.confirmed_at != user.confirmed_at
-      refute Repo.get_by(UserToken, user_id: user.id)
+      refute Repo.get_by(UserToken, user_id: user.user_id)
     end
 
     test "does not update email with invalid token", %{user: user} do
       assert Accounts.update_user_email(user, "oops") == :error
-      assert Repo.get!(User, user.id).email == user.email
-      assert Repo.get_by(UserToken, user_id: user.id)
+      assert Repo.get!(User, user.user_id).email == user.email
+      assert Repo.get_by(UserToken, user_id: user.user_id)
     end
 
     test "does not update email if user email changed", %{user: user, token: token} do
       assert Accounts.update_user_email(%{user | email: "current@example.com"}, token) == :error
-      assert Repo.get!(User, user.id).email == user.email
-      assert Repo.get_by(UserToken, user_id: user.id)
+      assert Repo.get!(User, user.user_id).email == user.email
+      assert Repo.get_by(UserToken, user_id: user.user_id)
     end
 
     test "does not update email if token expired", %{user: user, token: token} do
       {1, nil} = Repo.update_all(UserToken, set: [inserted_at: ~N[2020-01-01 00:00:00]])
       assert Accounts.update_user_email(user, token) == :error
-      assert Repo.get!(User, user.id).email == user.email
-      assert Repo.get_by(UserToken, user_id: user.id)
+      assert Repo.get!(User, user.user_id).email == user.email
+      assert Repo.get_by(UserToken, user_id: user.user_id)
     end
   end
 
@@ -306,7 +306,7 @@ defmodule Muhurta.AccountsTest do
           password: "new valid password"
         })
 
-      refute Repo.get_by(UserToken, user_id: user.id)
+      refute Repo.get_by(UserToken, user_id: user.user_id)
     end
   end
 
@@ -324,7 +324,7 @@ defmodule Muhurta.AccountsTest do
       assert_raise Ecto.ConstraintError, fn ->
         Repo.insert!(%UserToken{
           token: user_token.token,
-          user_id: user_fixture().id,
+          user_id: user_fixture().user_id,
           context: "session"
         })
       end
@@ -340,7 +340,7 @@ defmodule Muhurta.AccountsTest do
 
     test "returns user by token", %{user: user, token: token} do
       assert session_user = Accounts.get_user_by_session_token(token)
-      assert session_user.id == user.id
+      assert session_user.user_id == user.user_id
     end
 
     test "does not return user for invalid token" do
@@ -375,7 +375,7 @@ defmodule Muhurta.AccountsTest do
 
       {:ok, token} = Base.url_decode64(token, padding: false)
       assert user_token = Repo.get_by(UserToken, token: :crypto.hash(:sha256, token))
-      assert user_token.user_id == user.id
+      assert user_token.user_id == user.user_id
       assert user_token.sent_to == user.email
       assert user_token.context == "confirm"
     end
@@ -397,21 +397,21 @@ defmodule Muhurta.AccountsTest do
       assert {:ok, confirmed_user} = Accounts.confirm_user(token)
       assert confirmed_user.confirmed_at
       assert confirmed_user.confirmed_at != user.confirmed_at
-      assert Repo.get!(User, user.id).confirmed_at
-      refute Repo.get_by(UserToken, user_id: user.id)
+      assert Repo.get!(User, user.user_id).confirmed_at
+      refute Repo.get_by(UserToken, user_id: user.user_id)
     end
 
     test "does not confirm with invalid token", %{user: user} do
       assert Accounts.confirm_user("oops") == :error
-      refute Repo.get!(User, user.id).confirmed_at
-      assert Repo.get_by(UserToken, user_id: user.id)
+      refute Repo.get!(User, user.user_id).confirmed_at
+      assert Repo.get_by(UserToken, user_id: user.user_id)
     end
 
     test "does not confirm email if token expired", %{user: user, token: token} do
       {1, nil} = Repo.update_all(UserToken, set: [inserted_at: ~N[2020-01-01 00:00:00]])
       assert Accounts.confirm_user(token) == :error
-      refute Repo.get!(User, user.id).confirmed_at
-      assert Repo.get_by(UserToken, user_id: user.id)
+      refute Repo.get!(User, user.user_id).confirmed_at
+      assert Repo.get_by(UserToken, user_id: user.user_id)
     end
   end
 
@@ -428,7 +428,7 @@ defmodule Muhurta.AccountsTest do
 
       {:ok, token} = Base.url_decode64(token, padding: false)
       assert user_token = Repo.get_by(UserToken, token: :crypto.hash(:sha256, token))
-      assert user_token.user_id == user.id
+      assert user_token.user_id == user.user_id
       assert user_token.sent_to == user.email
       assert user_token.context == "reset_password"
     end
@@ -446,20 +446,20 @@ defmodule Muhurta.AccountsTest do
       %{user: user, token: token}
     end
 
-    test "returns the user with valid token", %{user: %{id: id}, token: token} do
-      assert %User{id: ^id} = Accounts.get_user_by_reset_password_token(token)
+    test "returns the user with valid token", %{user: %{user_id: id}, token: token} do
+      assert %User{user_id: ^id} = Accounts.get_user_by_reset_password_token(token)
       assert Repo.get_by(UserToken, user_id: id)
     end
 
     test "does not return the user with invalid token", %{user: user} do
       refute Accounts.get_user_by_reset_password_token("oops")
-      assert Repo.get_by(UserToken, user_id: user.id)
+      assert Repo.get_by(UserToken, user_id: user.user_id)
     end
 
     test "does not return the user if token expired", %{user: user, token: token} do
       {1, nil} = Repo.update_all(UserToken, set: [inserted_at: ~N[2020-01-01 00:00:00]])
       refute Accounts.get_user_by_reset_password_token(token)
-      assert Repo.get_by(UserToken, user_id: user.id)
+      assert Repo.get_by(UserToken, user_id: user.user_id)
     end
   end
 
@@ -496,7 +496,7 @@ defmodule Muhurta.AccountsTest do
     test "deletes all tokens for the given user", %{user: user} do
       _ = Accounts.generate_user_session_token(user)
       {:ok, _} = Accounts.reset_user_password(user, %{password: "new valid password"})
-      refute Repo.get_by(UserToken, user_id: user.id)
+      refute Repo.get_by(UserToken, user_id: user.user_id)
     end
   end
 

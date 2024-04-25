@@ -87,7 +87,7 @@ defmodule MuhurtaWeb.Auth.UserAuthTest do
     test "authenticates user from session", %{conn: conn, user: user} do
       user_token = Accounts.generate_user_session_token(user)
       conn = conn |> put_session(:user_token, user_token) |> UserAuth.fetch_current_user([])
-      assert conn.assigns.current_user.id == user.id
+      assert conn.assigns.current_user.user_id == user.user_id
     end
 
     test "authenticates user from cookies", %{conn: conn, user: user} do
@@ -102,7 +102,7 @@ defmodule MuhurtaWeb.Auth.UserAuthTest do
         |> put_req_cookie(@remember_me_cookie, signed_token)
         |> UserAuth.fetch_current_user([])
 
-      assert conn.assigns.current_user.id == user.id
+      assert conn.assigns.current_user.user_id == user.user_id
       assert get_session(conn, :user_token) == user_token
 
       assert get_session(conn, :live_socket_id) ==
@@ -125,7 +125,7 @@ defmodule MuhurtaWeb.Auth.UserAuthTest do
       {:cont, updated_socket} =
         UserAuth.on_mount(:mount_current_user, %{}, session, %LiveView.Socket{})
 
-      assert updated_socket.assigns.current_user.id == user.id
+      assert updated_socket.assigns.current_user.user_id == user.user_id
     end
 
     test "assigns nil to current_user assign if there isn't a valid user_token", %{conn: conn} do
@@ -156,7 +156,7 @@ defmodule MuhurtaWeb.Auth.UserAuthTest do
       {:cont, updated_socket} =
         UserAuth.on_mount(:ensure_authenticated, %{}, session, %LiveView.Socket{})
 
-      assert updated_socket.assigns.current_user.id == user.id
+      assert updated_socket.assigns.current_user.user_id == user.user_id
     end
 
     test "redirects to login page if there isn't a valid user_token", %{conn: conn} do

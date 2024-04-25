@@ -4,6 +4,6 @@ defmodule Muhurta.Repo do
 
   # Installs Postgres extensions that ash commonly uses
   def installed_extensions do
-    ["ash-functions"]
+    ["ash-functions", AshMoney.AshPostgresExtension]
   end
 end

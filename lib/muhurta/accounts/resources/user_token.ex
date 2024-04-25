@@ -45,7 +45,7 @@ defmodule Muhurta.Accounts.UserToken do
   """
   def build_session_token(user) do
     token = :crypto.strong_rand_bytes(@rand_size)
-    {token, %UserToken{token: token, context: "session", user_id: user.id}}
+    {token, %UserToken{token: token, context: "session", user_id: user.user_id}}
   end
 
   @doc """
@@ -92,7 +92,7 @@ defmodule Muhurta.Accounts.UserToken do
        token: hashed_token,
        context: context,
        sent_to: sent_to,
-       user_id: user.id
+       user_id: user.user_id
      }}
   end
 
@@ -172,10 +172,10 @@ defmodule Muhurta.Accounts.UserToken do
   Gets all tokens for the given user for the given contexts.
   """
   def by_user_and_contexts_query(user, :all) do
-    from t in UserToken, where: t.user_id == ^user.id
+    from t in UserToken, where: t.user_id == ^user.user_id
   end
 
   def by_user_and_contexts_query(user, [_ | _] = contexts) do
-    from t in UserToken, where: t.user_id == ^user.id and t.context in ^contexts
+    from t in UserToken, where: t.user_id == ^user.user_id and t.context in ^contexts
   end
 end

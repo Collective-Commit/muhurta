@@ -29,7 +29,7 @@ defmodule MuhurtaWeb.Auth.UserConfirmationInstructionsLiveTest do
       assert Phoenix.Flash.get(conn.assigns.flash, :info) =~
                "If your email is in our system"
 
-      assert Repo.get_by!(Accounts.UserToken, user_id: user.id).context == "confirm"
+      assert Repo.get_by!(Accounts.UserToken, user_id: user.user_id).context == "confirm"
     end
 
     test "does not send confirmation token if user is confirmed", %{conn: conn, user: user} do
@@ -46,7 +46,7 @@ defmodule MuhurtaWeb.Auth.UserConfirmationInstructionsLiveTest do
       assert Phoenix.Flash.get(conn.assigns.flash, :info) =~
                "If your email is in our system"
 
-      refute Repo.get_by(Accounts.UserToken, user_id: user.id)
+      refute Repo.get_by(Accounts.UserToken, user_id: user.user_id)
     end
 
     test "does not send confirmation token if email is invalid", %{conn: conn} do

@@ -448,7 +448,7 @@ defmodule MuhurtaWeb.CoreComponents do
   ## Examples
 
       <.table id="users" rows={@users}>
-        <:col :let={user} label="id"><%= user.id %></:col>
+        <:col :let={user} label="id"><%= user.user_id %></:col>
         <:col :let={user} label="username"><%= user.username %></:col>
       </.table>
   """
