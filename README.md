@@ -52,4 +52,5 @@ Currently the app is available only in English but we have plans to introduce lo
 Muhurta is open-source under the Unlicense. See [LICENSE](LICENSE) for more detail.
 
 ## Sponsors
-Muhurta is our open-source project dedicated to simplifying meeting and event scheduling. If you like the project and our vision, consider sponsoring to show your support. Your support can help enhance collaboration everywhere.
+Muhurta is our open-source project dedicated to simplifying meeting and event scheduling. If you like the project and our vision, consider [sponsoring on Open Collective](https://opencollective.com/collective-commit) to show your support. Your support can help enhance collaboration everywhere.
+

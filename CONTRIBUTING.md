@@ -20,7 +20,7 @@ Currently the app is available only in English but we have plans to introduce lo
 
 ## Becoming a Sponsor 💰
 
-If you find this project useful and would like to contribute financially on an ongoing basis, please consider becoming a sponsor. Sponsors help us cover the costs of hosting, development, and maintenance, and enable us to continue working on the project.
+If you find this project useful and would like to contribute financially on an ongoing basis, please consider becoming a [sponsor on Open Collective](https://opencollective.com/collective-commit). Sponsors help us cover the costs of hosting, development, and maintenance, and enable us to continue working on the project.
 
 ## Documentation
 
