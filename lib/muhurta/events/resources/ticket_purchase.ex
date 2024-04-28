@@ -14,8 +14,6 @@ defmodule Muhurta.Events.TicketPurchase do
     attribute :name, :string
     attribute :email, :ci_string
     attribute :contact_info, :string
-    attribute :rsvp_status, :string
-    attribute :rsvp_date, :utc_datetime
 
     create_timestamp :created_at
     update_timestamp :updated_at
