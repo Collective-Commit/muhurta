@@ -4,4 +4,8 @@ defmodule MuhurtaWeb.PageController do
   def home(conn, _params) do
     render(conn, :home)
   end
+
+  def event(conn, _params) do
+    render(conn, :event)
+  end
 end
