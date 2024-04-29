@@ -32,6 +32,7 @@ defmodule Muhurta.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
+      {:bcrypt_elixir, "~> 3.0"},
       {:phoenix, "~> 1.7.11"},
       {:phoenix_ecto, "~> 4.4"},
       {:ecto_sql, "~> 3.10"},
@@ -57,7 +58,12 @@ defmodule Muhurta.MixProject do
       {:gettext, "~> 0.20"},
       {:jason, "~> 1.2"},
       {:dns_cluster, "~> 0.1.1"},
-      {:bandit, "~> 1.2"}
+      {:bandit, "~> 1.2"},
+      {:ash, "~> 3.0.0-rc.29"},
+      {:ash_postgres, "~> 2.0.0-rc.11"},
+      {:ash_phoenix, "~> 2.0.0-rc.7"},
+      {:ash_money, "~> 0.1.6-rc.0"},
+      {:ex_money_sql, "~> 1.0"}
     ]
   end
 
