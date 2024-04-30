@@ -38,6 +38,14 @@ The practice of choosing a Muhurta is deeply rooted in Indian culture and contin
 
    Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
 
+6. Setup Git hooks
+   
+   This is a recommended approach to ensure all code submitted for review is formatted first. Run the following command to setup hooks on your machine so that only formatted code gets committed to the repo.
+
+   ```
+   ./setup-hooks.sh
+   ```
+
 
 ## Contributors
 

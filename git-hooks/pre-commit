@@ -1,0 +1,14 @@
+#!/bin/sh
+
+# Run mix format
+mix format --check-formatted
+
+# Check if the previous command has failed
+if [ $? -ne 0 ]; then
+  echo "You have files that are not formatted properly."
+  echo "Please run 'mix format' before committing."
+  exit 1
+fi
+
+# Everything is formatted correctly, proceed with the commit
+exit 0
