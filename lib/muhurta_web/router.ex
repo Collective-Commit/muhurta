@@ -24,6 +24,27 @@ defmodule MuhurtaWeb.Router do
     get "/event", PageController, :event
   end
 
+  scope "/events", MuhurtaWeb do
+    pipe_through [:browser, :require_authenticated_user]
+
+    live_session :event_management,
+      on_mount: [{MuhurtaWeb.Auth.UserAuth, :ensure_authenticated}] do
+      live "/mine", EventLive.Index, :index
+      live "/new", EventLive.Index, :new
+      live "/:event_id/edit", EventLive.Index, :edit
+      live "/:event_id/show/edit", EventLive.Show, :edit
+    end
+  end
+
+  scope "/events", MuhurtaWeb do
+    pipe_through [:browser]
+
+    live_session :view_events,
+      on_mount: [{MuhurtaWeb.Auth.UserAuth, :mount_current_user}] do
+      live "/:event_id", EventLive.Show, :show
+    end
+  end
+
   # Other scopes may use custom stacks.
   # scope "/api", MuhurtaWeb do
   #   pipe_through :api

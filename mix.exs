@@ -60,10 +60,12 @@ defmodule Muhurta.MixProject do
       {:dns_cluster, "~> 0.1.1"},
       {:bandit, "~> 1.2"},
       {:ash, "~> 3.0.0-rc.29"},
+      {:picosat_elixir, "~> 0.2.0"},
       {:ash_postgres, "~> 2.0.0-rc.11"},
       {:ash_phoenix, "~> 2.0.0-rc.7"},
       {:ash_money, "~> 0.1.6-rc.0"},
-      {:ex_money_sql, "~> 1.0"}
+      {:ex_money_sql, "~> 1.0"},
+      {:faker, "~> 0.18", only: :test}
     ]
   end
 

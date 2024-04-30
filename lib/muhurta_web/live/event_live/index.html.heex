@@ -1,0 +1,49 @@
+<.header>
+  My Events
+  <:actions>
+    <.link patch={~p"/events/new"}>
+      <.button>New Event</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.table
+  id="events"
+  rows={@streams.events}
+  row_click={fn {_event_id, event} -> JS.navigate(~p"/events/#{event}") end}
+>
+  <:col :let={{_event_id, event}} label="Event"><%= event.name %></:col>
+
+  <:action :let={{_event_id, event}}>
+    <div class="sr-only">
+      <.link navigate={~p"/events/#{event}"}>Show</.link>
+    </div>
+
+    <.link patch={~p"/events/#{event}/edit"}>Edit</.link>
+  </:action>
+
+  <:action :let={{event_id, event}}>
+    <.link
+      phx-click={JS.push("delete", value: %{event_id: event.event_id}) |> hide("##{event_id}")}
+      data-confirm="Are you sure?"
+    >
+      Delete
+    </.link>
+  </:action>
+</.table>
+
+<.modal
+  :if={@live_action in [:new, :edit]}
+  id="event-modal"
+  show
+  on_cancel={JS.patch(~p"/events/mine")}
+>
+  <.live_component
+    module={MuhurtaWeb.EventLive.FormComponent}
+    id={(@event && @event.event_id) || :new}
+    title={@page_title}
+    current_user={@current_user}
+    action={@live_action}
+    event={@event}
+  />
+</.modal>

@@ -1,0 +1,36 @@
+<.header>
+  Event <%= @event.event_id %>
+  <:subtitle>This is a event record from your database.</:subtitle>
+
+  <:actions>
+    <.link patch={~p"/events/#{@event}/show/edit"} phx-click={JS.push_focus()}>
+      <.button>Edit event</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.list>
+  <:item title="Event"><%= @event.name %></:item>
+</.list>
+
+<div>
+  <%= @event.description %>
+</div>
+<.back navigate={~p"/events/mine"}>Back to events</.back>
+
+<.modal
+  :if={@live_action == :edit}
+  id="event-modal"
+  show
+  on_cancel={JS.patch(~p"/events/#{@event}")}
+>
+  <.live_component
+    module={MuhurtaWeb.EventLive.FormComponent}
+    id={@event.event_id}
+    title={@page_title}
+    action={@live_action}
+    current_user={@current_user}
+    event={@event}
+    patch={~p"/events/#{@event}"}
+  />
+</.modal>
