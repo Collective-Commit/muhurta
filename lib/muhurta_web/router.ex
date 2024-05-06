@@ -21,6 +21,7 @@ defmodule MuhurtaWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :home
+    get "/event", PageController, :event
   end
 
   # Other scopes may use custom stacks.
