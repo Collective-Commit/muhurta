@@ -67,6 +67,10 @@ defmodule Muhurta.Events.Event do
     read :mine do
       filter expr(user_id == ^actor(:user_id))
     end
+
+    update :publish do
+      change set_attribute(:is_published, true)
+    end
   end
 
   policies do
@@ -76,6 +80,7 @@ defmodule Muhurta.Events.Event do
 
     policy action(:read) do
       forbid_if expr(is_published == false)
+      authorize_if always()
     end
 
     policy always() do

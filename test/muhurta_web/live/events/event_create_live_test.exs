@@ -97,5 +97,16 @@ defmodule MuhurtaWeb.Events.EventCreateLiveTest do
           |> live(~p"/events/#{event.event_id}")
       end
     end
+
+    test "view published event of another user", %{conn: conn} do
+      user = user_fixture()
+      another_user = user_fixture()
+      event = event_fixture!(actor: another_user) |> Muhurta.Events.publish!()
+
+      assert {:ok, _lv, _html} =
+               conn
+               |> log_in_user(user)
+               |> live(~p"/events/#{event.event_id}")
+    end
   end
 end
