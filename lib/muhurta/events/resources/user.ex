@@ -14,4 +14,8 @@ defmodule Muhurta.Events.User do
     attribute :name, :string
     attribute :email, :string
   end
+
+  actions do
+    defaults [:read]
+  end
 end

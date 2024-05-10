@@ -1,0 +1,175 @@
+{
+  "attributes": [
+    {
+      "default": "fragment(\"gen_random_uuid()\")",
+      "size": null,
+      "type": "uuid",
+      "source": "event_id",
+      "references": null,
+      "allow_nil?": false,
+      "generated?": false,
+      "primary_key?": true
+    },
+    {
+      "default": "nil",
+      "size": null,
+      "type": "text",
+      "source": "name",
+      "references": null,
+      "allow_nil?": false,
+      "generated?": false,
+      "primary_key?": false
+    },
+    {
+      "default": "nil",
+      "size": null,
+      "type": "text",
+      "source": "description",
+      "references": null,
+      "allow_nil?": false,
+      "generated?": false,
+      "primary_key?": false
+    },
+    {
+      "default": "nil",
+      "size": null,
+      "type": "text",
+      "source": "location",
+      "references": null,
+      "allow_nil?": true,
+      "generated?": false,
+      "primary_key?": false
+    },
+    {
+      "default": "nil",
+      "size": null,
+      "type": "boolean",
+      "source": "is_recurring",
+      "references": null,
+      "allow_nil?": true,
+      "generated?": false,
+      "primary_key?": false
+    },
+    {
+      "default": "nil",
+      "size": null,
+      "type": "text",
+      "source": "recurring_rule",
+      "references": null,
+      "allow_nil?": true,
+      "generated?": false,
+      "primary_key?": false
+    },
+    {
+      "default": "nil",
+      "size": null,
+      "type": "utc_datetime",
+      "source": "recurring_until",
+      "references": null,
+      "allow_nil?": true,
+      "generated?": false,
+      "primary_key?": false
+    },
+    {
+      "default": "false",
+      "size": null,
+      "type": "boolean",
+      "source": "is_published",
+      "references": null,
+      "allow_nil?": true,
+      "generated?": false,
+      "primary_key?": false
+    },
+    {
+      "default": "fragment(\"(now() AT TIME ZONE 'utc')\")",
+      "size": null,
+      "type": "utc_datetime_usec",
+      "source": "created_at",
+      "references": null,
+      "allow_nil?": false,
+      "generated?": false,
+      "primary_key?": false
+    },
+    {
+      "default": "fragment(\"(now() AT TIME ZONE 'utc')\")",
+      "size": null,
+      "type": "utc_datetime_usec",
+      "source": "updated_at",
+      "references": null,
+      "allow_nil?": false,
+      "generated?": false,
+      "primary_key?": false
+    },
+    {
+      "default": "nil",
+      "size": null,
+      "type": "uuid",
+      "source": "user_id",
+      "references": {
+        "name": "events_user_id_fkey",
+        "table": "users",
+        "schema": "public",
+        "destination_attribute": "user_id",
+        "primary_key?": true,
+        "multitenancy": {
+          "global": null,
+          "attribute": null,
+          "strategy": null
+        },
+        "on_delete": null,
+        "on_update": null,
+        "deferrable": false,
+        "match_with": null,
+        "match_type": null,
+        "destination_attribute_default": null,
+        "destination_attribute_generated": null
+      },
+      "allow_nil?": true,
+      "generated?": false,
+      "primary_key?": false
+    },
+    {
+      "default": "nil",
+      "size": null,
+      "type": "uuid",
+      "source": "organizer_id",
+      "references": {
+        "name": "events_organizer_id_fkey",
+        "table": "organizers",
+        "schema": "public",
+        "destination_attribute": "organizer_id",
+        "primary_key?": true,
+        "multitenancy": {
+          "global": null,
+          "attribute": null,
+          "strategy": null
+        },
+        "on_delete": null,
+        "on_update": null,
+        "deferrable": false,
+        "match_with": null,
+        "match_type": null,
+        "destination_attribute_default": null,
+        "destination_attribute_generated": null
+      },
+      "allow_nil?": true,
+      "generated?": false,
+      "primary_key?": false
+    }
+  ],
+  "table": "events",
+  "hash": "C84758063B4DACEBD8476F724436BFAB5351B386624957C301572AEA56296A1D",
+  "repo": "Elixir.Muhurta.Repo",
+  "check_constraints": [],
+  "custom_indexes": [],
+  "custom_statements": [],
+  "schema": null,
+  "identities": [],
+  "multitenancy": {
+    "global": null,
+    "attribute": null,
+    "strategy": null
+  },
+  "base_filter": null,
+  "has_create_action": true
+}
